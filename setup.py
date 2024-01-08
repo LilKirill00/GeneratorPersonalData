@@ -5,15 +5,14 @@ from cx_Freeze import setup, Executable
 build_options = {'packages': [], 'excludes': []}
 
 import sys
-
-base = 'Win32GUI' if sys.platform == 'win32' else None
+base = 'Win32GUI' if sys.platform=='win32' else None
 
 executables = [
     Executable('main.py', base=base)
 ]
 
-setup(name='ГенераторПерсональныхДанных',
-      version='1.0',
-      description='',
-      options={'build_exe': build_options},
-      executables=executables)
+setup(name='GeneratorPersonalData',
+      version = '1.0',
+      description = '',
+      options = {'build_exe': build_options},
+      executables = executables)
