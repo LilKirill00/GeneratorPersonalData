@@ -5,7 +5,7 @@ import pyperclip
 
 import PyQt5
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QPushButton, QMessageBox, QDesktopWidget
+from PyQt5.QtWidgets import QDesktopWidget
 from PyQt5.QtCore import QTime, QCoreApplication, QEventLoop
 
 from faker import Faker
@@ -55,35 +55,36 @@ class Objects:
     objects = []
 
     def __init__(self):
-        self.genAll()
-        ui.buttonGenAll.clicked.connect(self.genAll)
+        self.gen_all_data()
+        ui.buttonGenAll.clicked.connect(self.gen_all_data)
 
-    def genAll(self):
-        for object in self.objects:
-            object.genByName()
+    def gen_all_data(self):
+        for element in self.objects:
+            element.gen_by_name()
 
-    def getObj(self):
+    def get_object(self):
         print('{')
-        for object in self.objects:
-            print('\t' + object.label.text())
+        for element in self.objects:
+            print('\t' + element.label.text())
         print('}')
 
 
 class RowObj(Objects):
-    def __init__(self, textbox, label, buttonGen, buttonCopy, generator):
+    def __init__(self, textbox, label, button_gen, button_copy, generator):
+        super().__init__()
         self.textbox: QtWidgets.QLineEdit = textbox
         self.label: QtWidgets.QLabel = label
-        self.buttonGen: QtWidgets.QPushButton = buttonGen
-        self.buttonCopy: QtWidgets.QPushButton = buttonCopy
+        self.buttonGen: QtWidgets.QPushButton = button_gen
+        self.buttonCopy: QtWidgets.QPushButton = button_copy
         self.generator = generator
-        buttonGen.clicked.connect(self.genByName)
-        buttonCopy.clicked.connect(self.copyText)
+        button_gen.clicked.connect(self.gen_by_name)
+        button_copy.clicked.connect(self.copy_text)
         super().objects.append(self)
 
-    def copyText(self) -> None:
+    def copy_text(self) -> None:
         pyperclip.copy(self.textbox.text())
 
-    def genByName(self) -> None:
+    def gen_by_name(self) -> None:
         self.textbox.setText(str(self.generator(globals)))
 
 
@@ -92,7 +93,7 @@ class Persone:
     Name: str
     SecName: str
 
-    def fioUpdate(self) -> str:
+    def fio_update(self) -> str:
         self.Surname = fake.last_name()
         ui.Surname.setText(self.Surname)
         self.Name = fake.first_name()
@@ -101,19 +102,19 @@ class Persone:
         ui.SecName.setText(self.SecName)
         return ui.Surname.text() + ' ' + ui.Name.text() + ' ' + ui.SecName.text()
 
-    def updateSurname(self) -> str:
+    def update_surname(self) -> str:
         tmp = fake.last_name()
         ui.FullName.setText(ui.FullName.text().replace(self.Surname, tmp, 1))
         self.Surname = tmp
         return self.Surname
 
-    def updateName(self) -> str:
+    def update_name(self) -> str:
         tmp = fake.first_name()
         ui.FullName.setText(ui.FullName.text().replace(self.Name, tmp, 1))
         self.Name = tmp
         return self.Name
 
-    def updateSecName(self) -> str:
+    def update_sec_name(self) -> str:
         tmp = fake.middle_name()
         ui.FullName.setText(ui.FullName.text().replace(self.SecName, tmp, 1))
         self.SecName = tmp
@@ -127,10 +128,10 @@ WebLink = RowObj(ui.WebLink, ui.labelWebLink, ui.buttonGenWebLink, ui.buttonCopy
 WordEn = RowObj(ui.WordEn, ui.labelWordEn, ui.buttonGenWordEn, ui.buttonCopyWordEn, lambda x: generic_en.text.word())
 WordRu = RowObj(ui.WordRu, ui.labelWordRu, ui.buttonGenWordRu, ui.buttonCopyWordRu, lambda x: generic.text.word())
 Username = RowObj(ui.Username, ui.labelUsername, ui.buttonGenUsername, ui.buttonCopyUsername, lambda x: generic.person.username())
-FullName = RowObj(ui.FullName, ui.labelFullName, ui.buttonGenFullName, ui.buttonCopyFullName, lambda x: Persone.fioUpdate())
-Surname = RowObj(ui.Surname, ui.labelSurname, ui.buttonGenSurname, ui.buttonCopySurname, lambda x: Persone.updateSurname())
-Name = RowObj(ui.Name, ui.labelName, ui.buttonGenName, ui.buttonCopyName, lambda x: Persone.updateName())
-SecName = RowObj(ui.SecName, ui.labelSecName, ui.buttonGenSecName, ui.buttonCopySecName, lambda x: Persone.updateSecName())
+FullName = RowObj(ui.FullName, ui.labelFullName, ui.buttonGenFullName, ui.buttonCopyFullName, lambda x: Persone.fio_update())
+Surname = RowObj(ui.Surname, ui.labelSurname, ui.buttonGenSurname, ui.buttonCopySurname, lambda x: Persone.update_surname())
+Name = RowObj(ui.Name, ui.labelName, ui.buttonGenName, ui.buttonCopyName, lambda x: Persone.update_name())
+SecName = RowObj(ui.SecName, ui.labelSecName, ui.buttonGenSecName, ui.buttonCopySecName, lambda x: Persone.update_sec_name())
 Email = RowObj(ui.Email, ui.labelEmail, ui.buttonGenEmail, ui.buttonCopyEmail, lambda x: fake.ascii_free_email())
 Phone = RowObj(ui.Phone, ui.labelPhone, ui.buttonGenPhone, ui.buttonCopyPhone, lambda x: fake.phone_number())
 Birthday = RowObj(ui.Birthday, ui.labelBirthday, ui.buttonGenBirthday, ui.buttonCopyBirthday, lambda x: generic.datetime.date())

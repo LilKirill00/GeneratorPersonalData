@@ -1,0 +1,9 @@
+.idea/
+__pycache__/
+
+venv/
+
+convert_ui_in_py.sh
+
+build/
+main.spec

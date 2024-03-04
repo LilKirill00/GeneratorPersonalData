@@ -30,7 +30,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>WinIcon.png</normaloff>WinIcon.png</iconset>
+    <normaloff>img/WinIcon.png</normaloff>img/WinIcon.png</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
@@ -1956,7 +1956,7 @@ color: rgb(255, 255, 255);</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -2061,13 +2061,13 @@ color: rgb(255, 255, 255);</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>580</y>
       <width>1301</width>
-      <height>41</height>
+      <height>42</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
